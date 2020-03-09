@@ -14,3 +14,5 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+# SmartCloset-AppFlutter
+Digital closet that allows you to see your clothing combinations and know what is in your closet and when. Also gives clothing recommendations. The hardware part will automatically capture clothing when you put it in your closet and add it to the app.
