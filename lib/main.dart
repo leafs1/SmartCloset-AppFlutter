@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'camerascreen/camera_screen.dart';
 import 'previewscreen/preview_screen.dart';
-
+// https://medium.com/@dev.n/the-complete-flutter-series-article-3-lists-and-grids-in-flutter-b20d1a393e39
 void main() => runApp(SmartCloset());
 
 class SmartCloset extends StatelessWidget {
