@@ -37,6 +37,7 @@ class DrawerWidget extends StatelessWidget {
             ListTile(
               title: Text('Add Clothes'),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context,
               new MaterialPageRoute(builder: (ctxt) => new CameraScreen()));
               print("changed");
@@ -49,6 +50,7 @@ class DrawerWidget extends StatelessWidget {
             ListTile(
               title: Text('My Closet'),
               onTap: () {
+                Navigator.pop(context);
                 Navigator.push(context,
               new MaterialPageRoute(builder: (ctxt) => new SecondScreen()));
                 // Update the state of the app
@@ -66,3 +68,49 @@ class DrawerWidget extends StatelessWidget {
   }
 }
 
+
+class DrawerOnly extends StatelessWidget {
+  @override
+  Widget build (BuildContext context) {
+    return new Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+
+          children: <Widget>[
+            DrawerHeader(
+              child: Text("null"),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey
+              ),
+            ),
+            ListTile(
+              title: Text('Add Clothes'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+              new MaterialPageRoute(builder: (ctxt) => new CameraScreen()));
+              print("changed");
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                //Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('My Closet'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+              new MaterialPageRoute(builder: (ctxt) => new SecondScreen()));
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                //Navigator.pop(context);
+              },
+            ),
+
+          ],
+        ),
+    );
+  }
+}

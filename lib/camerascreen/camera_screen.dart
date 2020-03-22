@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'camera_screen.dart';
 import 'package:camera/camera.dart';
 
@@ -111,41 +112,7 @@ class _CameraScreenState extends State {
           ),
         ),
       ),
-      /*
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("null"),
-              decoration: BoxDecoration(
-                color: Colors.blueGrey
-              ),
-            ),
-            ListTile(
-              title: Text('Take Picture'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Closet'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-
-          ],
-        ),
-      ),
-      */
+      drawer: new DrawerOnly()
     );
   }
 
