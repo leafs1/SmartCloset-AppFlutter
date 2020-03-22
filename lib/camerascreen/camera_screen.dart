@@ -244,12 +244,20 @@ class _CameraScreenState extends State {
       print("getting file");
       File file = File(path);
 
+      // create image directory
+      final startDir = (await getApplicationDocumentsDirectory()).path;
+      new Directory(startDir + "/images/").create().then((Directory directory) {
+      print(directory.path);
+  });
+
+      // get permanent path
       final newPath = join(
         (await getApplicationDocumentsDirectory()).path,
-        '$imageName.png',
+        'images/$imageName.png',
       );
       print("new path = " + newPath);
 
+      // bring up message
       showDialog(
         context: context,
         builder: (BuildContext context) {
