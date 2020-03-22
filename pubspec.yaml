@@ -28,6 +28,7 @@ dependencies:
   camera: 
   path_provider:
   shared_preferences:
+  overlay_support:
 
 
 dev_dependencies:

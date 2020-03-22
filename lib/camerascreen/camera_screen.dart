@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'camera_screen.dart';
 import 'package:camera/camera.dart';
 
+import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
@@ -131,8 +132,9 @@ class _CameraScreenState extends State {
             FloatingActionButton(
                 child: Icon(Icons.camera),
                 backgroundColor: Colors.blueGrey,
-                onPressed: () {
+                onPressed: () { 
                   _onCapturePressed(context);
+                  
                 })
           ],
         ),
@@ -140,6 +142,39 @@ class _CameraScreenState extends State {
     );
   }
 
+  // Show dialog box when the take picture button is hit
+  bool _showDialog(context) {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Would you like to save the photo?"),
+          content: new Text("Alert Dialog body"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            //First Button
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                return false;
+              },
+            ),
+            // Second Button
+            new FlatButton(
+              child: new Text("Save"), 
+              onPressed: () {
+                Navigator.of(context).pop();
+                return true;
+              }
+            )
+          ],
+        );
+      },
+    );
+  }
 
 
 
@@ -188,43 +223,75 @@ class _CameraScreenState extends State {
 
 
 
-
-
-
   // Logic to capture picture and save to path
-  void _onCapturePressed(context) async {
+  Future _onCapturePressed(context) async {
     try {
       // Store the picture in the temp directory.
       //getTemporaryDirectory
+      final imageName = DateTime.now().toString();
 
-      
+      //getApplicationDocumentsDirectory
       final path = join(
-        (await getApplicationDocumentsDirectory()).path,
-        '${DateTime.now()}.png',
+        (await getTemporaryDirectory()).path,
+        '$imageName.png',
       );
       // Capture image and save it to passed in path
       print("path = " + path.toString());
       await controller.takePicture(path);
       print("picture taken");
+      print(controller.value.aspectRatio);
 
-      
+      print("getting file");
+      File file = File(path);
 
-      
-      //String contents = await File(path).readAsString();
-      //print("contents = " + contents);
-      
+      final newPath = join(
+        (await getApplicationDocumentsDirectory()).path,
+        '$imageName.png',
+      );
+      print("new path = " + newPath);
 
-      //print(int.parse(contents));
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertDialog(
+            title: new Text("Would you like to save the photo?"),
+            content: new Image.file(file),
+            actions: <Widget>[
+              // usually buttons at the bottom of the dialog
+              //First Button
+              new FlatButton(
+                child: new Text("Close"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  print("not moved");
+                },
+              ),
+              // Second Button
+              new FlatButton(
+                child: new Text("Save"), 
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  file.rename(newPath);
 
+
+                  print("moved");
+                }
+              )
+            ],
+          );
+        },
+      );
 
       // Displays the image taken
-      /*Navigator.push(
+/* 
+      Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(imagePath: path),
+                builder: (context) => DisplayPictureScreen(imagePath: "/data/user/0/com.example.smart_closet_flutter/app_flutter/2020-03-21 21:37:41.154984.png", imageName: imageName),
               ),
             );
-      */
+*/      
     } catch (e) {
       print(e);
     }
@@ -263,20 +330,75 @@ class _CameraScreenState extends State {
 }
 
 
-// A widget that displays the picture taken by the user.
-/*class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
+// In the new page have same layout as before and have a button that says "save". If button is pressed, img is saved and go back to 
+//taking pictyre screen.
 
-  const DisplayPictureScreen({Key key, this.imagePath}) : super(key: key);
+// A widget that displays the picture taken by the user.
+/*
+class DisplayPictureScreen extends StatelessWidget {
+  final String imagePath;
+  final String imageName;
+
+  const DisplayPictureScreen({Key key, this.imagePath, this.imageName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
+      appBar: AppBar(
+        title: Text('Confrmation'),
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: Container(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Image.file(File(imagePath), fit: BoxFit.fitWidth),
+              ),
+              
+              SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Spacer(),
+                  _captureControlRowWidget(context),
+                  Spacer()
+                ],
+              ),
+              SizedBox(height: 20.0)
+            ],
+          ),
+        ),
+      ),
+    );
+    
+  }
+
+    Widget _captureControlRowWidget(context) {
+    return Expanded(
+      child: Align(
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            FloatingActionButton(
+                child: Icon(Icons.add_a_photo),
+                backgroundColor: Colors.blueGrey,
+                onPressed: (                
+                ) {
+                  
+                })
+          ],
+        ),
+      ),
     );
   }
+
+  
 }
+
 */
+
