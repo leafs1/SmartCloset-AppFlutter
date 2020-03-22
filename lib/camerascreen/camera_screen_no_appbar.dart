@@ -11,14 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 //https://www.raywenderlich.com/4333657-using-the-camera-on-flutter
 
-class CameraScreen extends StatefulWidget {
+class CameraScreenNoAppbar extends StatefulWidget {
   @override
-  _CameraScreenState createState() {
-    return _CameraScreenState();
+  _CameraScreenStateNoAppBar createState() {
+    return _CameraScreenStateNoAppBar();
   }
 }
 
-class _CameraScreenState extends State {
+class _CameraScreenStateNoAppBar extends State {
   CameraController controller;
   List cameras;
   int selectedCameraIdx;
@@ -84,10 +84,6 @@ class _CameraScreenState extends State {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Clothes'),
-        backgroundColor: Colors.blueGrey,
-      ),
       body: Container(
         child: SafeArea(
           child: Column(
