@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:smart_closet_flutter/SecondScreen.dart';
+import 'package:smart_closet_flutter/ClosetScreen.dart';
 import 'package:smart_closet_flutter/camerascreen/camera_screen_no_appbar.dart';
 import 'camerascreen/camera_screen.dart';
 
@@ -52,7 +52,7 @@ class DrawerWidget extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-              new MaterialPageRoute(builder: (ctxt) => new SecondScreen()));
+              new MaterialPageRoute(builder: (ctxt) => new Closet()));
                 // Update the state of the app
                 // ...
                 // Then close the drawer
@@ -101,7 +101,7 @@ class DrawerOnly extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
                 Navigator.push(context,
-              new MaterialPageRoute(builder: (ctxt) => new SecondScreen()));
+              new MaterialPageRoute(builder: (ctxt) => new Closet()));
                 // Update the state of the app
                 // ...
                 // Then close the drawer
