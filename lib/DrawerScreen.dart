@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:smart_closet_flutter/ClosetScreen.dart';
 import 'package:smart_closet_flutter/camerascreen/camera_screen_no_appbar.dart';
+import 'package:smart_closet_flutter/test.dart';
 import 'camerascreen/camera_screen.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -53,6 +54,19 @@ class DrawerWidget extends StatelessWidget {
                 Navigator.pop(context);
                 Navigator.push(context,
               new MaterialPageRoute(builder: (ctxt) => new Closet()));
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                //Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              title: Text('test'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+              new MaterialPageRoute(builder: (ctxt) => new test()));
                 // Update the state of the app
                 // ...
                 // Then close the drawer

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "961198286727",
+    "firebase_url": "https://smart-closet-app.firebaseio.com",
+    "project_id": "smart-closet-app",
+    "storage_bucket": "smart-closet-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961198286727:android:92130ea562eef2a283d522",
+        "android_client_info": {
+          "package_name": "com.example.smart_closet_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961198286727-ectkl5k7nrjusemp59v2algvjcu2jmic.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyArEBN5XvCp1npnhtsfffwi56AL276lG5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961198286727-ectkl5k7nrjusemp59v2algvjcu2jmic.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

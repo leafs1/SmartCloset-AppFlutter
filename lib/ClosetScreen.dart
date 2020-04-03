@@ -22,6 +22,7 @@ class _ClosetState extends State {
   void initState() {
         // TODO: implement initState
         super.initState();
+        _secondListOfFiles();
         _listofFiles();
       }
 
@@ -31,6 +32,20 @@ class _ClosetState extends State {
       file = io.Directory("$directory/images/").listSync();  //use your folder name insted of resume.
     });
   }
+
+  void _secondListOfFiles() async {
+    directory = (await getApplicationDocumentsDirectory()).path;
+    setState(() {
+      file = io.Directory("$directory").listSync();  //use your folder name insted of resume.
+    });
+
+    print(file);
+    File json = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+    print("reading json");
+    print(json.readAsString());
+  }
+
+  
 
   Widget card(path){
     return Card(
@@ -101,7 +116,7 @@ class _ClosetState extends State {
                   Expanded(
                     child: ListView.separated(
                       itemBuilder: (BuildContext context, int index) {
-                          print("length = " + file.length.toString());
+                          //print("length = " + file.length.toString());
                           //print(file.toString());
 
                           //print(fileWExtra.substring(startIdx, fileWExtra.length-1));
@@ -109,7 +124,7 @@ class _ClosetState extends State {
                           //Image image = Image.file(File(path));
                           int usedIndex = index * 2;
 
-                          print("index = " + usedIndex.toString());
+                          //print("index = " + usedIndex.toString());
 
                           if (file.length % 2 == 1 && usedIndex == file.length-1) {
                             String path1 = getPath(usedIndex);

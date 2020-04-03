@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'camerascreen/camera_screen.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'dart:io';
 // https://medium.com/@dev.n/the-complete-flutter-series-article-3-lists-and-grids-in-flutter-b20d1a393e39
 void main() => runApp(SmartCloset());
 
@@ -8,6 +11,10 @@ class SmartCloset extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print("starting json");
+    makeJson();
+    print("ending json");
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -26,6 +33,21 @@ class SmartCloset extends StatelessWidget {
       
     );
   }
+
+  void makeJson() async{
+    String path = (await getApplicationDocumentsDirectory()).path + '/clothing_info.json';
+    print("path = " + path );
+    File json = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+    json.writeAsStringSync("please work");
+  }
+/*
+  Future<File> writeContent() async {
+    final file = await _localFile;
+    // Write the file
+    return file.writeAsString('Hello Folks');
+}
+*/
+
 }
 
 

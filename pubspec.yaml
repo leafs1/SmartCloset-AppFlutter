@@ -17,6 +17,9 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+
+  cloud_firestore:
+
   flutter:
     sdk: flutter
 
@@ -30,6 +33,8 @@ dependencies:
   shared_preferences:
   overlay_support:
 
+  image_picker:
+  firebase_ml_vision:
 
 dev_dependencies:
   flutter_test:
