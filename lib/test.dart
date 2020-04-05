@@ -32,7 +32,7 @@ class _test extends State<test> {
       print("text = " + text);
       //print("entity id = " + entityId);
       print("confidence = " + confidence.toString());
-}
+    }
     print("4");
     //print("list = " + list.toString());
     if (mounted) {

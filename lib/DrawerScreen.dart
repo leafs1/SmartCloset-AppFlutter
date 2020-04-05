@@ -123,6 +123,19 @@ class DrawerOnly extends StatelessWidget {
               },
             ),
 
+            ListTile(
+              title: Text('test'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(context,
+              new MaterialPageRoute(builder: (ctxt) => new test()));
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                //Navigator.pop(context);
+              },
+            ),
+
           ],
         ),
     );

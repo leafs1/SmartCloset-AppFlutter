@@ -38,15 +38,7 @@ class SmartCloset extends StatelessWidget {
     String path = (await getApplicationDocumentsDirectory()).path + '/clothing_info.json';
     print("path = " + path );
     File json = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
-    json.writeAsStringSync("please work");
   }
-/*
-  Future<File> writeContent() async {
-    final file = await _localFile;
-    // Write the file
-    return file.writeAsString('Hello Folks');
-}
-*/
 
 }
 

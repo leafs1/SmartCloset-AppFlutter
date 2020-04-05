@@ -1,6 +1,7 @@
 import 'dart:io' as io;
 import 'dart:io';
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'package:path_provider/path_provider.dart';
@@ -22,7 +23,7 @@ class _ClosetState extends State {
   void initState() {
         // TODO: implement initState
         super.initState();
-        _secondListOfFiles();
+        //_secondListOfFiles();
         _listofFiles();
       }
 
@@ -33,6 +34,7 @@ class _ClosetState extends State {
     });
   }
 
+/*
   void _secondListOfFiles() async {
     directory = (await getApplicationDocumentsDirectory()).path;
     setState(() {
@@ -40,12 +42,66 @@ class _ClosetState extends State {
     });
 
     print(file);
-    File json = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+    File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
     print("reading json");
-    print(json.readAsString());
+    
+
+
+
+    
+    // Read from json
+    String s = (await read(jsonn));
+    print(s);
+    //Convert String copy of json to actual JSON or Map type idk
+    var parsedJson = json.decode(s) as Map;
+    print(parsedJson);
+    
+    List imageNames = new List();
+    List clothingTypes = new List();
+    List clothingColour = new List();
+
+    // Parse json and add image info the their respected lists.
+    for (final i in parsedJson["images"]){
+      imageNames.add(i["name"]);  
+      clothingTypes.add(i["type"]);
+      clothingColour.add(i["colour"]);
+    }
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    
+
+    
+
+  }
+  //Read from json
+  Future<String> read(File json) async{
+    json.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
+    //json.writeAsStringSync("{\"images\": [\"img1\":\"h\"]}");
+    return (await json.readAsString());
   }
 
-  
+  */
+
+  //Read from json
+
+  void getClothingName() async{
+    File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+
+    // Read from json
+    String s = (await read(jsonn));
+    print(s);
+    //Convert String copy of json to actual JSON or Map type idk
+    var parsedJson = json.decode(s) as Map;
+    print(parsedJson);
+
+  }
+
+  Future<String> read(File json) async{
+    return (await json.readAsString());
+  }
 
   Widget card(path){
     return Card(
@@ -130,7 +186,7 @@ class _ClosetState extends State {
                             String path1 = getPath(usedIndex);
                             Card card1 = card(path1);
                             List cards = [card1];
-                            print("second");
+                            //print("second");
                             return getRow(cards);
 
                           } else {
@@ -141,7 +197,7 @@ class _ClosetState extends State {
                             Card card2 = card(path2);
 
                             List cards = [card1,card2];
-                            print("first");
+                            //print("first");
                             return getRow(cards);
                           }
 
