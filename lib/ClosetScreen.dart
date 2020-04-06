@@ -87,29 +87,95 @@ class _ClosetState extends State {
 
   //Read from json
 
-  void getClothingName() async{
-    File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+  Future getClothingName(String imgPath, String imgPath2) async{
 
-    // Read from json
-    String s = (await read(jsonn));
-    print(s);
-    //Convert String copy of json to actual JSON or Map type idk
-    var parsedJson = json.decode(s) as Map;
-    print(parsedJson);
+    if (imgPath2 == "none"){
+      File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
 
+      // Read from json
+      String s = (await read(jsonn));
+      //print(s);
+      //Convert String copy of json to actual JSON or Map type idk
+      var parsedJson = json.decode(s) as Map;
+      //print(parsedJson);
+      //print("please work hreee");
+
+      print("path = " + imgPath);
+
+      for (var i in parsedJson["images"]) {
+        print("images = " + parsedJson["images"].toString());
+        print(i["name"].toString());
+        print(imgPath);
+        if (i["name"].toString() == imgPath) {
+          return i["type"].toString();
+        } else {
+          print("not here");
+        }
+        print("done");
+      }
+      return "none";
+      //return finished;
+    } else {
+      File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+      print("path1 = " + imgPath);
+      print("path2 = " + imgPath2);
+
+      // Read from json
+      String s = (await read(jsonn));
+      //print(s);
+      //Convert String copy of json to actual JSON or Map type idk
+      var parsedJson = json.decode(s) as Map;
+      //print(parsedJson);
+
+      List names = new List();
+
+      for (var i in parsedJson["images"]) {
+        print(i["name"].toString());
+        print(imgPath);
+        if (i["name"].toString() == imgPath) {
+          names.add(i["type"].toString());
+          //return i["type"].toString();
+        } else {
+          //names.add("none");
+          //return "None";
+        }
+      }
+
+      for (var i in parsedJson["images"]) {
+        print(i["name"].toString());
+        print(imgPath);
+        if (i["name"].toString() == imgPath2) {
+          names.add(i["type"].toString());
+          //return i["type"].toString();
+        } else {
+          //names.add("none");
+          //return "None";
+        }
+      }
+
+      //print("names = (down)");
+      //print(names);
+      print("names = " + names.toString());
+      return names;
+    }
+
+    
   }
 
   Future<String> read(File json) async{
     return (await json.readAsString());
   }
 
-  Widget card(path){
+  Widget card(path, text) {
+
+
+
     return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
       child: Column(
         children: <Widget>[
           Image.file(File(path)),
-          Text("Image")
+          Text(text)
         ],
       ),
     );
@@ -162,6 +228,9 @@ class _ClosetState extends State {
   }
 
   Widget build(BuildContext context) {
+
+
+    
     return new Scaffold(
       appBar: new AppBar(title: new Text("My Closet"), backgroundColor: Colors.blueGrey),
       drawer: new DrawerOnly(),
@@ -184,21 +253,53 @@ class _ClosetState extends State {
 
                           if (file.length % 2 == 1 && usedIndex == file.length-1) {
                             String path1 = getPath(usedIndex);
+
+                            return FutureBuilder(
+                                  future: getClothingName(path1, "none"),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      Card card1 = card(path1, snapshot.data);
+                                      List cards = [card1];
+                                      return getRow(cards);
+                                      //return Text(snapshot.data);
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  }
+                                );
+
+                            /*
                             Card card1 = card(path1);
                             List cards = [card1];
                             //print("second");
                             return getRow(cards);
-
+                            */
                           } else {
                             String path1 = getPath(usedIndex);
-                            Card card1 = card(path1);
-
                             String path2 = getPath(usedIndex+1);
-                            Card card2 = card(path2);
+                            List cards = new List();
+                            return FutureBuilder(
+                                  future: getClothingName(path1, path2),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.hasData) {
+                                      print("data = " + snapshot.data.toString());
+                                      Card card1 = card(path1, snapshot.data[0]);
+                                      Card card2 = card(path2, snapshot.data[1]);
+                                      cards.add(card1);
+                                      cards.add(card2);
+                                      return getRow(cards);
+                                      //return Text(snapshot.data);
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
+                                  }
+                                );
+                            //Card card1 = card(path1);
 
-                            List cards = [card1,card2];
+                            //Card card2 = card(path2);
+
                             //print("first");
-                            return getRow(cards);
+                            //return getRow(cards);
                           }
 
                         }, 

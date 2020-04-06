@@ -325,7 +325,7 @@ class _CameraScreenState extends State {
 
     print(file);
     File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
-    jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
+    //jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
     print("reading json");
     
 
