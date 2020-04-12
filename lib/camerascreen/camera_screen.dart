@@ -323,9 +323,13 @@ class _CameraScreenState extends State {
   void _saveJson(String imgPath) async {
     
 
-    print(file);
+    print(file);    
+
     File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
-    jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
+    
+    try {
+
+    //jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
     print("reading json");
     
 
@@ -391,6 +395,70 @@ class _CameraScreenState extends State {
     print("test");
     print(testttt);
 
+    } catch (e) {
+      jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}"); 
+    
+      // Read from json
+    String s = (await read(jsonn));
+    print(s);
+    //Convert String copy of json to actual JSON or Map type idk
+    var parsedJson = json.decode(s) as Map;
+    print(parsedJson);
+    
+    List imageNames = new List();
+    List clothingTypes = new List();
+    List clothingColour = new List();
+
+    // Parse json and add image info the their respected lists.
+    for (final i in parsedJson["images"]){
+      imageNames.add(i["name"]);  
+      clothingTypes.add(i["type"]);
+      clothingColour.add(i["colour"]);
+    }
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    
+    //Add new Data to lists
+    //Add image path to list
+    imageNames.add(imgPath);
+
+    // Add clothing types and colour to lists
+    List info = (await _getImageAndDetectClothes(imgPath));
+    print("info2 = ");
+    print(info);
+    clothingTypes.add(info[0]);
+    clothingColour.add(info[1]);
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    //Convert Lists to JSON
+
+    String startJSON = "{ \"images\": [";
+
+    for (int i = 0; i < imageNames.length; i++){
+      if (i == imageNames.length-1) {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}";
+        startJSON += addition;
+      } else {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}, ";
+        startJSON += addition;
+      }
+    }
+
+    startJSON += "]}";
+    print(startJSON);
+
+    jsonn.writeAsStringSync(startJSON);
+    String testttt = (await read(jsonn));
+    print("test");
+    print(testttt);
+
+    }
     
   }
 
