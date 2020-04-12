@@ -13,8 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
-//https://www.raywenderlich.com/4333657-using-the-camera-on-flutter
-
+//https://github.com/flutter/flutter/issues/28625
+//https://github.com/FirebaseExtended/flutterfire/issues/437
+//https://github.com/flutter/flutter/issues/28054
 
 class CameraScreen extends StatefulWidget {
   @override
