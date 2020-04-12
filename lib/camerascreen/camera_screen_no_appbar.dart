@@ -1,9 +1,13 @@
 import 'dart:io';
-
+import 'dart:io' as io;
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'camera_screen.dart';
 import 'package:camera/camera.dart';
-
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
@@ -23,6 +27,12 @@ class _CameraScreenStateNoAppBar extends State {
   List cameras;
   int selectedCameraIdx;
   String imagePath;
+
+  String directory;
+  List file = new List();
+
+  File _imageFile;
+  List _list;
 
   @override
   void initState() {
@@ -107,41 +117,7 @@ class _CameraScreenStateNoAppBar extends State {
           ),
         ),
       ),
-      /*
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("null"),
-              decoration: BoxDecoration(
-                color: Colors.blueGrey
-              ),
-            ),
-            ListTile(
-              title: Text('Take Picture'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Closet'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-
-          ],
-        ),
-      ),
-      */
+      drawer: new DrawerOnly()
     );
   }
 
@@ -170,40 +146,6 @@ class _CameraScreenStateNoAppBar extends State {
           ],
         ),
       ),
-    );
-  }
-
-  // Show dialog box when the take picture button is hit
-  bool _showDialog(context) {
-    // flutter defined function
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Would you like to save the photo?"),
-          content: new Text("Alert Dialog body"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            //First Button
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
-                Navigator.of(context).pop();
-                return false;
-              },
-            ),
-            // Second Button
-            new FlatButton(
-              child: new Text("Save"), 
-              onPressed: () {
-                Navigator.of(context).pop();
-                return true;
-              }
-            )
-          ],
-        );
-      },
     );
   }
 
@@ -312,6 +254,10 @@ class _CameraScreenStateNoAppBar extends State {
                 onPressed: () {
                   Navigator.of(context).pop();
                   file.rename(newPath);
+                  _saveJson(newPath);
+
+
+
 
 
                   print("moved");
@@ -365,6 +311,195 @@ class _CameraScreenStateNoAppBar extends State {
         aspectRatio: controller.value.aspectRatio,
         child: CameraPreview(controller),
       );
+  }
+
+
+
+  void _saveJson(String imgPath) async {
+    
+
+    print(file);    
+
+    File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
+    
+    try {
+
+    //jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}");
+    print("reading json");
+    
+
+
+
+    // Read from json
+    String s = (await read(jsonn));
+    print(s);
+    //Convert String copy of json to actual JSON or Map type idk
+    var parsedJson = json.decode(s) as Map;
+    print(parsedJson);
+    
+    List imageNames = new List();
+    List clothingTypes = new List();
+    List clothingColour = new List();
+
+    // Parse json and add image info the their respected lists.
+    for (final i in parsedJson["images"]){
+      imageNames.add(i["name"]);  
+      clothingTypes.add(i["type"]);
+      clothingColour.add(i["colour"]);
+    }
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    
+    //Add new Data to lists
+    //Add image path to list
+    imageNames.add(imgPath);
+
+    // Add clothing types and colour to lists
+    List info = (await _getImageAndDetectClothes(imgPath));
+    print("info2 = ");
+    print(info);
+    clothingTypes.add(info[0]);
+    clothingColour.add(info[1]);
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    //Convert Lists to JSON
+
+    String startJSON = "{ \"images\": [";
+
+    for (int i = 0; i < imageNames.length; i++){
+      if (i == imageNames.length-1) {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}";
+        startJSON += addition;
+      } else {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}, ";
+        startJSON += addition;
+      }
+    }
+
+    startJSON += "]}";
+    print(startJSON);
+
+    jsonn.writeAsStringSync(startJSON);
+    String testttt = (await read(jsonn));
+    print("test");
+    print(testttt);
+
+    } catch (e) {
+      jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}"); 
+    
+      // Read from json
+    String s = (await read(jsonn));
+    print(s);
+    //Convert String copy of json to actual JSON or Map type idk
+    var parsedJson = json.decode(s) as Map;
+    print(parsedJson);
+    
+    List imageNames = new List();
+    List clothingTypes = new List();
+    List clothingColour = new List();
+
+    // Parse json and add image info the their respected lists.
+    for (final i in parsedJson["images"]){
+      imageNames.add(i["name"]);  
+      clothingTypes.add(i["type"]);
+      clothingColour.add(i["colour"]);
+    }
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    
+    //Add new Data to lists
+    //Add image path to list
+    imageNames.add(imgPath);
+
+    // Add clothing types and colour to lists
+    List info = (await _getImageAndDetectClothes(imgPath));
+    print("info2 = ");
+    print(info);
+    clothingTypes.add(info[0]);
+    clothingColour.add(info[1]);
+
+    print(imageNames);
+    print(clothingTypes);
+    print(clothingColour);
+
+    //Convert Lists to JSON
+
+    String startJSON = "{ \"images\": [";
+
+    for (int i = 0; i < imageNames.length; i++){
+      if (i == imageNames.length-1) {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}";
+        startJSON += addition;
+      } else {
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}, ";
+        startJSON += addition;
+      }
+    }
+
+    startJSON += "]}";
+    print(startJSON);
+
+    jsonn.writeAsStringSync(startJSON);
+    String testttt = (await read(jsonn));
+    print("test");
+    print(testttt);
+
+    }
+    
+  }
+
+
+
+  //Read from json
+  Future<String> read(File json) async{
+    return (await json.readAsString());
+  }
+
+
+  Future<List> _getImageAndDetectClothes(String imgPath) async {
+    final imageFile = File(imgPath);
+    print("1");
+    final image = FirebaseVisionImage.fromFile(imageFile);
+    print("2"); 
+    final ImageLabeler clothingDetector = FirebaseVision.instance.cloudImageLabeler();
+    print("3");
+    // clothingDetector needs to be of type LabelDetector
+    //.detectInImage() not here
+    final list = await clothingDetector.processImage(image);
+    List info = new List();
+
+    for (ImageLabel label in list) {
+      final String text = label.text;
+      final String entityId = label.entityId;
+      final double confidence = label.confidence;
+      print("text = " + text);
+      //print("entity id = " + entityId);
+      print("confidence = " + confidence.toString());
+    }
+    print("4");
+
+    info.add(list[0].text);
+    info.add(list[1].text);
+    print("info = ");
+    print(info);
+
+    //print("list = " + list.toString());
+    if (mounted) {
+      setState(() {
+      _imageFile = imageFile;
+      _list = list;
+    });
+    }
+    return info;
   }
 }
 
