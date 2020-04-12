@@ -17,6 +17,8 @@ import 'package:path/path.dart';
 //https://github.com/FirebaseExtended/flutterfire/issues/437
 //https://github.com/flutter/flutter/issues/28054
 
+// When I run, flutter build ios, the podfile will be made and to fix the error, change the iOS version in the podfile from 8 to 9.
+
 class CameraScreen extends StatefulWidget {
   @override
   _CameraScreenState createState() {
