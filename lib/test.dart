@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+//import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 //https://www.youtube.com/watch?v=ymyYUCrJnxU 1:55
@@ -15,6 +15,7 @@ class _test extends State<test> {
   List _list;
 
   void _getImageAndDetectClothes() async {
+    /*
     final imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
     print("1");
     final image = FirebaseVisionImage.fromFile(imageFile);
@@ -41,6 +42,7 @@ class _test extends State<test> {
       _list = list;
     });
     }
+    */
   }
 
   @override
