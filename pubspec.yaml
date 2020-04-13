@@ -34,7 +34,7 @@ dependencies:
   overlay_support:
 
   image_picker:
-  #firebase_ml_vision: 
+  firebase_ml_vision: 
 
 dev_dependencies:
   flutter_test:
