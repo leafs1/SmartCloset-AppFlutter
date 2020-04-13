@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:io' as io;
-//import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'camera_screen.dart';
@@ -474,7 +474,7 @@ class _CameraScreenState extends State {
 
 
   Future<List> _getImageAndDetectClothes(String imgPath) async {
-    /*
+    
     final imageFile = File(imgPath);
     print("1");
     final image = FirebaseVisionImage.fromFile(imageFile);
@@ -509,7 +509,7 @@ class _CameraScreenState extends State {
     });
     }
     return info;
-    */
+    
   }
 }
 
