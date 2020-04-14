@@ -7,17 +7,17 @@ import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
 
-class Closet extends StatefulWidget {
+class ClosetOld extends StatefulWidget {
   @override
-  _ClosetState createState() {
-    return _ClosetState();
+  _ClosetStateOld createState() {
+    return _ClosetStateOld();
   }
 }
 
-class _ClosetState extends State {
+class _ClosetStateOld extends State {
   @override
 
-   String directory;
+  String directory;
   List file = new List();
   
   void initState() {
@@ -170,57 +170,30 @@ class _ClosetState extends State {
 
 
 
-    return Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              child: Card(
+    return Card(
       margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
-      child: Container(
-        child: 
-          Column(
-          children: <Widget>[
-            //Image.asset('lib/images/coathanger1.png'),
-            Image.file(File(path)),
-            Text(text)
-            ],
-          ),
-        
-        
+      child: Column(
+        children: <Widget>[
+          Image.file(File(path)),
+          Text(text)
+        ],
       ),
-      
-    ),
-
-            );
-    
+    );
   }
 
   Widget getRow(cardsList) {
     if (cardsList.length == 1){
       return Row(
-        
         children: <Widget>[
           Expanded(
-            
-              
-              child: Align(
-                
-                alignment: Alignment.center,
-                child: Wrap (
-                  
-                  children: <Widget>[
-                    cardsList[0]
-                  ],
-            
-                ),
-              )
-            
-              
+            child: new Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: cardsList[0],
+            ),
           ),
           Expanded(
             child: Container(
-              color: Color.fromRGBO(144, 205, 240, 0),
+              color: Colors.white,
             ),
           )
 
@@ -231,26 +204,16 @@ class _ClosetState extends State {
       return Row(
         children: <Widget>[
           Expanded(
-            child: Align(
-                alignment: Alignment.center,
-                child: Wrap (
-                  children: <Widget>[
-                    cardsList[0]
-                  ],
-            
-                ),
-              )
+            child: new Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: cardsList[0],
+            ),
           ),
           Expanded(
-            child: Align(
-                alignment: Alignment.center,
-                child: Wrap (
-                  children: <Widget>[
-                    cardsList[1]
-                  ],
-            
-                ),
-              )
+            child: new Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: cardsList[1],
+            ),
           ),
         ],
       );
@@ -272,14 +235,11 @@ class _ClosetState extends State {
       appBar: new AppBar(title: new Text("My Closet"), backgroundColor: Colors.blueGrey),
       drawer: new DrawerOnly(),
       body: Container(
-        color: Color.fromRGBO(144, 205, 240, 100),
-              child: Row(
+              child: Column(
                 children: <Widget>[
                   // your Content if there
-                 Expanded(
-                  
+                  Expanded(
                     child: ListView.separated(
-                      
                       itemBuilder: (BuildContext context, int index) {
                           //print("length = " + file.length.toString());
                           //print(file.toString());
@@ -295,14 +255,12 @@ class _ClosetState extends State {
                             String path1 = getPath(usedIndex);
 
                             return FutureBuilder(
-                    
                                   future: getClothingName(path1, "none"),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      Transform card1 = card(path1, snapshot.data);
+                                      Card card1 = card(path1, snapshot.data);
                                       List cards = [card1];
-                                      return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
-
+                                      return getRow(cards);
                                       //return Text(snapshot.data);
                                     } else {
                                       return CircularProgressIndicator();
@@ -325,11 +283,11 @@ class _ClosetState extends State {
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
                                       print("data = " + snapshot.data.toString());
-                                      Transform card1 = card(path1, snapshot.data[0]);
-                                      Transform card2 = card(path2, snapshot.data[1]);
+                                      Card card1 = card(path1, snapshot.data[0]);
+                                      Card card2 = card(path2, snapshot.data[1]);
                                       cards.add(card1);
                                       cards.add(card2);
-                                      return Container (child: getRow(cards), width: MediaQuery.of(context).size.width, );
+                                      return getRow(cards);
                                       //return Text(snapshot.data);
                                     } else {
                                       return CircularProgressIndicator();
@@ -344,7 +302,7 @@ class _ClosetState extends State {
                             //return getRow(cards);
                           }
 
-                        }, scrollDirection: Axis.horizontal,
+                        }, 
                       separatorBuilder: (BuildContext context, int index) {
                         return Divider();
                       }, 
