@@ -340,17 +340,22 @@ class _CameraScreenStateNoAppBar extends State {
     List imageNames = new List();
     List clothingTypes = new List();
     List clothingColour = new List();
+    List allTypes = new List();
 
     // Parse json and add image info the their respected lists.
     for (final i in parsedJson["images"]){
+      print("parsed json here");
+      print(parsedJson["images"]);
       imageNames.add(i["name"]);  
       clothingTypes.add(i["type"]);
       clothingColour.add(i["colour"]);
+      allTypes.add(i["allTypes"]);
     }
 
     print(imageNames);
     print(clothingTypes);
     print(clothingColour);
+    print(allTypes);
 
     
     //Add new Data to lists
@@ -363,10 +368,13 @@ class _CameraScreenStateNoAppBar extends State {
     print(info);
     clothingTypes.add(info[0]);
     clothingColour.add(info[1]);
+    allTypes.add(info[2]);
 
     print(imageNames);
     print(clothingTypes);
     print(clothingColour);
+    print("clothing types look here");
+    print(allTypes);
 
     //Convert Lists to JSON
 
@@ -374,10 +382,10 @@ class _CameraScreenStateNoAppBar extends State {
 
     for (int i = 0; i < imageNames.length; i++){
       if (i == imageNames.length-1) {
-        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}";
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\", \"allTypes\": \"" + allTypes[i].toString() + "\"}";
         startJSON += addition;
       } else {
-        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}, ";
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\", \"allTypes\": \"" + allTypes[i].toString() + "\"}, ";
         startJSON += addition;
       }
     }
@@ -391,9 +399,9 @@ class _CameraScreenStateNoAppBar extends State {
     print(testttt);
 
     } catch (e) {
-      jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\"}]}"); 
+      jsonn.writeAsStringSync("{ \"images\": [{\"name\": \"img1\", \"type\": \"shirt\", \"colour\": \"black\", \"allTypes\": \"[type1,type2]\"   }, {\"name\": \"img2\", \"type\": \"pants\", \"colour\": \"white\", \"allTypes\": \"[type1,type2]\"}]}"); 
     
-      // Read from json
+    // Read from json
     String s = (await read(jsonn));
     print(s);
     //Convert String copy of json to actual JSON or Map type idk
@@ -403,17 +411,22 @@ class _CameraScreenStateNoAppBar extends State {
     List imageNames = new List();
     List clothingTypes = new List();
     List clothingColour = new List();
+    List allTypes = new List();
 
     // Parse json and add image info the their respected lists.
     for (final i in parsedJson["images"]){
+      print("parsed json here");
+      print(parsedJson["images"]);
       imageNames.add(i["name"]);  
       clothingTypes.add(i["type"]);
       clothingColour.add(i["colour"]);
+      allTypes.add(i["allTypes"]);
     }
 
     print(imageNames);
     print(clothingTypes);
     print(clothingColour);
+    print(allTypes);
 
     
     //Add new Data to lists
@@ -426,10 +439,13 @@ class _CameraScreenStateNoAppBar extends State {
     print(info);
     clothingTypes.add(info[0]);
     clothingColour.add(info[1]);
+    allTypes.add(info[2]);
 
     print(imageNames);
     print(clothingTypes);
     print(clothingColour);
+    print("clothing types look here");
+    print(allTypes);
 
     //Convert Lists to JSON
 
@@ -437,10 +453,10 @@ class _CameraScreenStateNoAppBar extends State {
 
     for (int i = 0; i < imageNames.length; i++){
       if (i == imageNames.length-1) {
-        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}";
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\", \"allTypes\": \"" + allTypes[i].toString() + "\"}";
         startJSON += addition;
       } else {
-        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\"}, ";
+        String addition = "{\"name\": \"" + imageNames[i] + "\", \"type\": \"" + clothingTypes[i] + "\", \"colour\": \"" + clothingColour[i] + "\", \"allTypes\": \"" + allTypes[i].toString() + "\"}, ";
         startJSON += addition;
       }
     }
@@ -466,6 +482,7 @@ class _CameraScreenStateNoAppBar extends State {
 
 
   Future<List> _getImageAndDetectClothes(String imgPath) async {
+    
     final imageFile = File(imgPath);
     print("1");
     final image = FirebaseVisionImage.fromFile(imageFile);
@@ -489,6 +506,18 @@ class _CameraScreenStateNoAppBar extends State {
 
     info.add(list[0].text);
     info.add(list[1].text);
+
+    List allTypes = new List();
+    for (ImageLabel label in list) {
+      final String text = label.text;
+      final double confidence = label.confidence;
+
+      if (confidence > 0.8){
+        allTypes.add(text);
+      }
+    }
+    info.add(allTypes);
+
     print("info = ");
     print(info);
 
@@ -500,6 +529,7 @@ class _CameraScreenStateNoAppBar extends State {
     });
     }
     return info;
+    
   }
 }
 

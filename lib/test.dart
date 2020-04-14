@@ -15,6 +15,7 @@ class _test extends State<test> {
   List _list;
 
   void _getImageAndDetectClothes() async {
+    
     final imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
     print("1");
     final image = FirebaseVisionImage.fromFile(imageFile);
@@ -41,6 +42,7 @@ class _test extends State<test> {
       _list = list;
     });
     }
+    
   }
 
   @override
