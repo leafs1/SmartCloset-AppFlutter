@@ -170,18 +170,26 @@ class _ClosetState extends State {
 
 
 
-    return Transform(
+    return Column(
+            children: <Widget>[
+              //Image.asset('lib/images/coathangerTilted1.png'),
+              
+
+              Transform(
               transform: Matrix4.identity()
               ..setEntry(3, 2, 0.01)
               ..rotateY(0.3),
               alignment: FractionalOffset.center,
-              child: Card(
-      margin: EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 16.0),
+              
+              child: 
+              Column(children: <Widget>[
+                Image.asset('lib/images/coathanger3.png'),
+                Card(
+      margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
       child: Container(
         child: 
           Column(
           children: <Widget>[
-            //Image.asset('lib/images/coathanger1.png'),
             Image.file(File(path)),
             Text(text)
             ],
@@ -191,8 +199,14 @@ class _ClosetState extends State {
       ),
       
     ),
+              ],)
+              
 
-            );
+            )
+            ],
+          );
+    
+    
     
   }
 
@@ -273,7 +287,10 @@ class _ClosetState extends State {
       drawer: new DrawerOnly(),
       body: Container(
         color: Color.fromRGBO(144, 205, 240, 100),
-              child: Row(
+              child: 
+              Stack(children: <Widget>[
+                
+                Row(
                 children: <Widget>[
                   // your Content if there
                  Expanded(
@@ -299,7 +316,7 @@ class _ClosetState extends State {
                                   future: getClothingName(path1, "none"),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      Transform card1 = card(path1, snapshot.data);
+                                      Column card1 = card(path1, snapshot.data);
                                       List cards = [card1];
                                       return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
 
@@ -325,8 +342,8 @@ class _ClosetState extends State {
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
                                       print("data = " + snapshot.data.toString());
-                                      Transform card1 = card(path1, snapshot.data[0]);
-                                      Transform card2 = card(path2, snapshot.data[1]);
+                                      Column card1 = card(path1, snapshot.data[0]);
+                                      Column card2 = card(path2, snapshot.data[1]);
                                       cards.add(card1);
                                       cards.add(card2);
                                       return Container (child: getRow(cards), width: MediaQuery.of(context).size.width, );
@@ -352,6 +369,9 @@ class _ClosetState extends State {
                   )
                 ],
               ),
+            
+              ],)
+              
             ),
     );
   }
