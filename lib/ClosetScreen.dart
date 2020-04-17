@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io' as io;
 import 'dart:io';
 
@@ -24,6 +25,7 @@ class _ClosetState extends State {
         // TODO: implement initState
         super.initState();
         //_secondListOfFiles();
+
         _listofFiles();
       }
 
@@ -169,12 +171,13 @@ class _ClosetState extends State {
   Widget card(path, text) {
 
 
+    return new Column(
 
-    return Column(
+
             children: <Widget>[
               //Image.asset('lib/images/coathangerTilted1.png'),
               
-
+              /*
               Transform(
               transform: Matrix4.identity()
               ..setEntry(3, 2, 0.01)
@@ -182,6 +185,7 @@ class _ClosetState extends State {
               alignment: FractionalOffset.center,
               
               child: 
+              */
               Column(children: <Widget>[
                 Image.asset('lib/images/coathanger3.png'),
                 Card(
@@ -199,32 +203,95 @@ class _ClosetState extends State {
       ),
       
     ),
+    
               ],)
               
 
-            )
+           // )
             ],
-          );
-    
-    
-    
+          );  
+
+
+
+
   }
+
 
   Widget getRow(cardsList) {
     if (cardsList.length == 1){
       return Row(
+        mainAxisSize: MainAxisSize.max,
         
         children: <Widget>[
           Expanded(
             
               
               child: Align(
-                
                 alignment: Alignment.center,
                 child: Wrap (
-                  
                   children: <Widget>[
-                    cardsList[0]
+                    
+                    
+                      
+                      Stack(children: <Widget>[
+                        
+                        
+                        Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child:    Stack(children: <Widget>[
+                          cardsList[0],
+
+              
+                         
+                          
+                        ],)
+                        ),
+
+                        Column(
+                          children: <Widget>[
+                            SizedBox(height: 33),
+                            Image.asset('lib/images/bar.png')
+                          ],
+                       ),
+
+
+                       
+                    
+      new Positioned.fill(
+      child: Stack(children: <Widget>[Container(), 
+      Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child: Stack(children: <Widget>[
+                Container(), Image.asset('lib/images/coathanger3cut2.png')
+              ],) 
+                          
+
+              
+                         
+                          
+                        
+                        ),
+      ],),
+    ),
+                                
+
+                     
+
+                      
+
+                
+                      
+                                  
+                       ],)
+                                         
                   ],
             
                 ),
@@ -233,9 +300,63 @@ class _ClosetState extends State {
               
           ),
           Expanded(
-            child: Container(
-              color: Color.fromRGBO(144, 205, 240, 0),
-            ),
+            child: Align(
+                alignment: Alignment.center,
+                child: Wrap (
+                  children: <Widget>[
+                    
+                    
+                      
+                      Stack(children: <Widget>[
+                        
+                        Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child:
+                        Stack(children: <Widget>[
+                          Opacity(opacity: 0, child: cardsList[0],)
+                          ,
+                          new Positioned.fill(
+                          child: 
+                          Opacity(opacity: 0.0, child: Container(color: Color.fromRGBO(144, 205, 240, 100),),)
+                          ,
+                        ),
+
+              
+                         
+                          
+                        ],))
+                        ,
+
+                        Column(
+                          children: <Widget>[
+                            SizedBox(height: 33),
+                            Image.asset('lib/images/bar.png')
+                          ],
+                       ),
+
+
+                       
+                    
+      
+                                
+
+                     
+
+                      
+
+                
+                      
+                                  
+                       ],)
+                                         
+                  ],
+            
+                ),
+              )
           )
 
 
@@ -249,7 +370,68 @@ class _ClosetState extends State {
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    cardsList[0]
+                    
+                    
+                      
+                      Stack(children: <Widget>[
+                        
+                        
+                        Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child:    Stack(children: <Widget>[
+                          cardsList[0],
+
+              
+                         
+                          
+                        ],)
+                        ),
+
+                        Column(
+                          children: <Widget>[
+                            SizedBox(height: 33),
+                            Image.asset('lib/images/bar.png')
+                          ],
+                       ),
+
+
+                       
+                    
+      new Positioned.fill(
+      child: Stack(children: <Widget>[Container(), 
+      Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child: Stack(children: <Widget>[
+                Container(), Image.asset('lib/images/coathanger3cut2.png')
+              ],) 
+                          
+
+              
+                         
+                          
+                        
+                        ),
+      ],),
+    ),
+                                
+
+                     
+
+                      
+
+                
+                      
+                                  
+                       ],)
+                                         
                   ],
             
                 ),
@@ -260,7 +442,68 @@ class _ClosetState extends State {
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    cardsList[1]
+                    
+                    
+                      
+                      Stack(children: <Widget>[
+                        
+                        
+                        Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child:    Stack(children: <Widget>[
+                          cardsList[1],
+
+              
+                         
+                          
+                        ],)
+                        ),
+
+                        Column(
+                          children: <Widget>[
+                            SizedBox(height: 33),
+                            Image.asset('lib/images/bar.png')
+                          ],
+                       ),
+
+
+                       
+                    
+      new Positioned.fill(
+      child: Stack(children: <Widget>[Container(), 
+      Transform(
+              transform: Matrix4.identity()
+              ..setEntry(3, 2, 0.01)
+              ..rotateY(0.3),
+              alignment: FractionalOffset.center,
+              
+              child: Stack(children: <Widget>[
+                Container(), Image.asset('lib/images/coathanger3cut2.png')
+              ],) 
+                          
+
+              
+                         
+                          
+                        
+                        ),
+      ],),
+    ),
+                                
+
+                     
+
+                      
+
+                
+                      
+                                  
+                       ],)
+                                         
                   ],
             
                 ),
@@ -277,6 +520,12 @@ class _ClosetState extends State {
     String path = fileWExtra.substring(startIdx, fileWExtra.length-1);
     return path;
   }
+
+
+
+
+
+
 
   Widget build(BuildContext context) {
 
@@ -316,7 +565,8 @@ class _ClosetState extends State {
                                   future: getClothingName(path1, "none"),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      Column card1 = card(path1, snapshot.data);
+                                      Column card1 = new Column(children: <Widget>[card(path1, snapshot.data[0])] );
+
                                       List cards = [card1];
                                       return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
 
@@ -326,6 +576,7 @@ class _ClosetState extends State {
                                     }
                                   }
                                 );
+                                
 
                             /*
                             Card card1 = card(path1);
@@ -342,11 +593,16 @@ class _ClosetState extends State {
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
                                       print("data = " + snapshot.data.toString());
-                                      Column card1 = card(path1, snapshot.data[0]);
+                                      Column cardd = card(path1, snapshot.data[0]);
+                                      print("please do not be null");
+                                      Column card1 = new Column(children: <Widget>[cardd]);
+                                      
                                       Column card2 = card(path2, snapshot.data[1]);
                                       cards.add(card1);
                                       cards.add(card2);
-                                      return Container (child: getRow(cards), width: MediaQuery.of(context).size.width, );
+                                      // here return a stack with the image of the bar under the container.  
+                                      //Widget container = new Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
+                                      return Container (child: Stack(children: <Widget>[getRow(cards)],), width: MediaQuery.of(context).size.width, );
                                       //return Text(snapshot.data);
                                     } else {
                                       return CircularProgressIndicator();
