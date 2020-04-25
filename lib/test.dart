@@ -11,6 +11,7 @@ class test extends StatefulWidget {
 }
 
 class _test extends State<test> {
+  String _value = "1";
   File _imageFile;
   List _list;
 
@@ -50,9 +51,77 @@ class _test extends State<test> {
     return Scaffold(
       appBar: AppBar(
         title: Text("test"),
+        actions: <Widget>[
+          DropdownButton(
+            value: _value,
+            items: [
+              DropdownMenuItem(
+                value: "1",
+                child: Row(
+                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.build),
+                    SizedBox(width: 15),
+                    Text(
+                      "All Clothes",
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "2",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Shirts", 
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "3",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Pants", 
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "4",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Other", 
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              setState(() {
+                _value = value;
+                //build(context);
+              });
+            },
+            //isExpanded: true,
+          )
+      ]
       ),
 
-      body: Container(),
+      body: Container(child: icon(),),
+
+      
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -61,7 +130,19 @@ class _test extends State<test> {
         },
         tooltip: 'Pick an image',
         child: Icon(Icons.add_a_photo),
+
       ),
     );
   }
+
+  Widget icon() {
+    if (_value == "1") {
+      return Text("5");
+    } else if (_value == "2") {
+      return Icon(Icons.add_a_photo);
+    } else if (_value == "3") {
+      return Icon(Icons.add_alarm);
+    }
+  }
+
 }

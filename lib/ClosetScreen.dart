@@ -17,9 +17,13 @@ class Closet extends StatefulWidget {
 
 class _ClosetState extends State {
   @override
-
-   String directory;
+  String _value = "1";
+  String directory;
   List file = new List();
+
+  List currentList;
+  List shirts = ["Shirt", "shirt", "t-shirt", "top"];
+  List pants = ["pants", "jeans", "bottoms", "shorts"];
   
   void initState() {
         // TODO: implement initState
@@ -169,51 +173,26 @@ class _ClosetState extends State {
   }
 
   Widget card(path, text) {
-
-
     return new Column(
-
-
             children: <Widget>[
-              //Image.asset('lib/images/coathangerTilted1.png'),
-              
-              /*
-              Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              
-              child: 
-              */
-              Column(children: <Widget>[
-                Image.asset('lib/images/coathanger3.png'),
-                Card(
-      margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
-      child: Container(
-        child: 
-          Column(
-          children: <Widget>[
-            Image.file(File(path)),
-            Text(text)
-            ],
-          ),
-        
-        
-      ),
-      
-    ),
-    
-              ],)
-              
-
-           // )
+              Column(
+                children: <Widget>[
+                  Image.asset('lib/images/coathanger3.png'),
+                  Card(
+                    margin: EdgeInsets.fromLTRB(16.0, 0.0, 16.0, 16.0),
+                    child: Container(
+                      child: 
+                        Column(
+                          children: <Widget>[
+                            Image.file(File(path)),
+                            Text(text)
+                            ],
+                          ),                      
+                        ),
+                      ),
+                    ],)
             ],
           );  
-
-
-
-
   }
 
 
@@ -221,36 +200,25 @@ class _ClosetState extends State {
     if (cardsList.length == 1){
       return Row(
         mainAxisSize: MainAxisSize.max,
-        
         children: <Widget>[
-          Expanded(
-            
-              
+          Expanded( 
               child: Align(
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    
-                    
-                      
-                      Stack(children: <Widget>[
-                        
-                        
-                        Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              
-              child:    Stack(children: <Widget>[
-                          cardsList[0],
-
-              
-                         
-                          
-                        ],)
-                        ),
-
+                      Stack(
+                        children: <Widget>[
+                          Transform(
+                            transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.01)
+                            ..rotateY(0.3),
+                            alignment: FractionalOffset.center,
+                            
+                            child: Stack(
+                              children: <Widget>[
+                                cardsList[0],
+                              ],)
+                          ),
                         Column(
                           children: <Widget>[
                             SizedBox(height: 33),
@@ -258,42 +226,24 @@ class _ClosetState extends State {
                           ],
                        ),
 
-
-                       
-                    
       new Positioned.fill(
-      child: Stack(children: <Widget>[Container(), 
-      Transform(
+        child: Stack(
+          children: <Widget>[
+            Container(), 
+            Transform(
               transform: Matrix4.identity()
               ..setEntry(3, 2, 0.01)
               ..rotateY(0.3),
               alignment: FractionalOffset.center,
-              
-              child: Stack(children: <Widget>[
-                Container(), Image.asset('lib/images/coathanger3cut2.png')
-              ],) 
-                          
-
-              
-                         
-                          
-                        
-                        ),
+              child: Stack(
+                children: <Widget>[
+                  Container(), Image.asset('lib/images/coathanger3cut2.png')
+              ],)         
+              ),
       ],),
-    ),
-                                
-
-                     
-
-                      
-
-                
-                      
-                                  
-                       ],)
-                                         
+    ),                     
+                    ],)
                   ],
-            
                 ),
               )
             
@@ -304,31 +254,23 @@ class _ClosetState extends State {
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    
-                    
-                      
-                      Stack(children: <Widget>[
-                        
-                        Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              
-              child:
-                        Stack(children: <Widget>[
-                          Opacity(opacity: 0, child: cardsList[0],)
-                          ,
-                          new Positioned.fill(
-                          child: 
-                          Opacity(opacity: 0.0, child: Container(color: Color.fromRGBO(144, 205, 240, 100),),)
-                          ,
-                        ),
-
-              
-                         
-                          
-                        ],))
+                      Stack(
+                        children: <Widget>[
+                          Transform(
+                            transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.01)
+                            ..rotateY(0.3),
+                            alignment: FractionalOffset.center,
+                            
+                            child:
+                              Stack(
+                                children: <Widget>[
+                                  Opacity(opacity: 0, child: cardsList[0],),
+                                  new Positioned.fill(
+                                    child: 
+                                    Opacity(opacity: 0.0, child: Container(color: Color.fromRGBO(144, 205, 240, 100),),),
+                              ),
+                          ],))
                         ,
 
                         Column(
@@ -336,30 +278,12 @@ class _ClosetState extends State {
                             SizedBox(height: 33),
                             Image.asset('lib/images/bar.png')
                           ],
-                       ),
-
-
-                       
-                    
-      
-                                
-
-                     
-
-                      
-
-                
-                      
-                                  
+                       ),         
                        ],)
-                                         
                   ],
-            
                 ),
               )
           )
-
-
         ],
       );
     } else {
@@ -370,26 +294,18 @@ class _ClosetState extends State {
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    
-                    
-                      
-                      Stack(children: <Widget>[
-                        
-                        
-                        Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              
-              child:    Stack(children: <Widget>[
-                          cardsList[0],
-
-              
-                         
-                          
-                        ],)
-                        ),
+                      Stack(
+                        children: <Widget>[
+                          Transform(
+                            transform: Matrix4.identity()
+                            ..setEntry(3, 2, 0.01)
+                            ..rotateY(0.3),
+                            alignment: FractionalOffset.center,
+                            child: Stack(
+                              children: <Widget>[
+                                cardsList[0],
+                          ],)
+                          ),
 
                         Column(
                           children: <Widget>[
@@ -397,43 +313,27 @@ class _ClosetState extends State {
                             Image.asset('lib/images/bar.png')
                           ],
                        ),
-
-
-                       
-                    
+   
       new Positioned.fill(
-      child: Stack(children: <Widget>[Container(), 
-      Transform(
+        child: Stack(
+          children: <Widget>[
+            Container(), 
+            Transform(
               transform: Matrix4.identity()
               ..setEntry(3, 2, 0.01)
               ..rotateY(0.3),
               alignment: FractionalOffset.center,
               
-              child: Stack(children: <Widget>[
-                Container(), Image.asset('lib/images/coathanger3cut2.png')
+              child: Stack(
+                children: <Widget>[
+                Container(), 
+                Image.asset('lib/images/coathanger3cut2.png')
               ],) 
-                          
-
-              
-                         
-                          
-                        
-                        ),
+            ),
       ],),
-    ),
-                                
-
-                     
-
-                      
-
-                
-                      
-                                  
+    ),                        
                        ],)
-                                         
                   ],
-            
                 ),
               )
           ),
@@ -442,24 +342,16 @@ class _ClosetState extends State {
                 alignment: Alignment.center,
                 child: Wrap (
                   children: <Widget>[
-                    
-                    
-                      
-                      Stack(children: <Widget>[
-                        
-                        
+                      Stack(
+                        children: <Widget>[
                         Transform(
-              transform: Matrix4.identity()
-              ..setEntry(3, 2, 0.01)
-              ..rotateY(0.3),
-              alignment: FractionalOffset.center,
-              
-              child:    Stack(children: <Widget>[
-                          cardsList[1],
-
-              
-                         
-                          
+                          transform: Matrix4.identity()
+                          ..setEntry(3, 2, 0.01)
+                          ..rotateY(0.3),
+                          alignment: FractionalOffset.center,
+                          child: Stack(
+                            children: <Widget>[
+                              cardsList[1],
                         ],)
                         ),
 
@@ -469,39 +361,24 @@ class _ClosetState extends State {
                             Image.asset('lib/images/bar.png')
                           ],
                        ),
-
-
-                       
-                    
       new Positioned.fill(
-      child: Stack(children: <Widget>[Container(), 
-      Transform(
+        child: Stack(
+          children: <Widget>[
+            Container(), 
+            Transform(
               transform: Matrix4.identity()
               ..setEntry(3, 2, 0.01)
               ..rotateY(0.3),
               alignment: FractionalOffset.center,
               
-              child: Stack(children: <Widget>[
-                Container(), Image.asset('lib/images/coathanger3cut2.png')
-              ],) 
-                          
-
-              
-                         
-                          
-                        
+              child: Stack(
+                children: <Widget>[
+                  Container(), 
+                  Image.asset('lib/images/coathanger3cut2.png')
+              ],)              
                         ),
       ],),
-    ),
-                                
-
-                     
-
-                      
-
-                
-                      
-                                  
+    ),          
                        ],)
                                          
                   ],
@@ -525,14 +402,77 @@ class _ClosetState extends State {
 
 
 
-
-
-  Widget build(BuildContext context) {
-
-
-    
-    return new Scaffold(
-      appBar: new AppBar(title: new Text("My Closet"), backgroundColor: Colors.blueGrey),
+  Widget main() {
+return new Scaffold(
+      appBar: new AppBar(
+        title: new Text("My Closet"), 
+        backgroundColor: Colors.blueGrey, 
+        actions: <Widget>[
+          DropdownButton(
+            value: _value,
+            items: [
+              DropdownMenuItem(
+                value: "1",
+                child: Row(
+                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.build),
+                    SizedBox(width: 15),
+                    Text(
+                      "All Clothes",
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "2",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Shirts", 
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "3",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Pants", 
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "4",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Other", 
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            onChanged: (value) {
+              setState(() {
+                _value = value;
+                build(context);
+              });
+            },
+            //isExpanded: true,
+          )
+      ],),
       drawer: new DrawerOnly(),
       body: Container(
         color: Color.fromRGBO(144, 205, 240, 100),
@@ -576,14 +516,6 @@ class _ClosetState extends State {
                                     }
                                   }
                                 );
-                                
-
-                            /*
-                            Card card1 = card(path1);
-                            List cards = [card1];
-                            //print("second");
-                            return getRow(cards);
-                            */
                           } else {
                             String path1 = getPath(usedIndex);
                             String path2 = getPath(usedIndex+1);
@@ -609,12 +541,6 @@ class _ClosetState extends State {
                                     }
                                   }
                                 );
-                            //Card card1 = card(path1);
-
-                            //Card card2 = card(path2);
-
-                            //print("first");
-                            //return getRow(cards);
                           }
 
                         }, scrollDirection: Axis.horizontal,
@@ -630,6 +556,12 @@ class _ClosetState extends State {
               
             ),
     );
+  }
+
+  Widget build(BuildContext context) {
+    print("building again");
+    return main();
+    
   }
 
   
