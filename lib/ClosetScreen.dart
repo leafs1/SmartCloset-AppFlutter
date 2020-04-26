@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io' as io;
 import 'dart:io';
+import 'dart:core';
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -21,9 +22,10 @@ class _ClosetState extends State {
   String directory;
   List file = new List();
 
-  List currentList;
-  List shirts = ["Shirt", "shirt", "t-shirt", "top"];
-  List pants = ["pants", "jeans", "bottoms", "shorts"];
+  List currentList = ["null"];
+  //List shirts = ["Shirt", "shirt", "t-shirt", "top"];
+  List shirts = ["Property", "kitchen", "Kitchen"];
+  List pants = ["idk"];
   
   void initState() {
         // TODO: implement initState
@@ -110,21 +112,21 @@ class _ClosetState extends State {
 
       for (var i in parsedJson["images"]) {
         print("images = " + parsedJson["images"].toString());
-        print(i["name"].toString());
-        print(imgPath);
+        //print(i["name"].toString());
+        //print(imgPath);
         if (i["name"].toString() == imgPath) {
-          return i["type"].toString();
+          return i["allTypes"].toString();
         } else {
-          print("not here");
+          //print("not here");
         }
-        print("done");
+        //print("done");
       }
       return "none";
       //return finished;
     } else {
       File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
-      print("path1 = " + imgPath);
-      print("path2 = " + imgPath2);
+      //print("path1 = " + imgPath);
+     // print("path2 = " + imgPath2);
 
       // Read from json
       String s = (await read(jsonn));
@@ -136,10 +138,12 @@ class _ClosetState extends State {
       List names = new List();
 
       for (var i in parsedJson["images"]) {
-        print(i["name"].toString());
-        print(imgPath);
+                print("images = " + parsedJson["images"].toString());
+
+       // print(i["name"].toString());
+       // print(imgPath);
         if (i["name"].toString() == imgPath) {
-          names.add(i["type"].toString());
+          names.add(i["allTypes"].toString());
           //return i["type"].toString();
         } else {
           //names.add("none");
@@ -148,10 +152,10 @@ class _ClosetState extends State {
       }
 
       for (var i in parsedJson["images"]) {
-        print(i["name"].toString());
-        print(imgPath);
+      //  print(i["name"].toString());
+     //   print(imgPath);
         if (i["name"].toString() == imgPath2) {
-          names.add(i["type"].toString());
+          names.add(i["allTypes"].toString());
           //return i["type"].toString();
         } else {
           //names.add("none");
@@ -161,7 +165,7 @@ class _ClosetState extends State {
 
       //print("names = (down)");
       //print(names);
-      print("names = " + names.toString());
+    //  print("names = " + names.toString());
       return names;
     }
 
@@ -466,6 +470,13 @@ return new Scaffold(
             ],
             onChanged: (value) {
               setState(() {
+                if (value == "1"){
+                  currentList = ["null"];
+                } else if (value == "2") {
+                  currentList = shirts;
+                } else if (value == "3") {
+                  currentList = pants;
+                }
                 _value = value;
                 build(context);
               });
@@ -500,15 +511,51 @@ return new Scaffold(
                           if (file.length % 2 == 1 && usedIndex == file.length-1) {
                             String path1 = getPath(usedIndex);
 
+
+
                             return FutureBuilder(
                     
                                   future: getClothingName(path1, "none"),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      Column card1 = new Column(children: <Widget>[card(path1, snapshot.data[0])] );
+                                      
+                                      // Get the list of types and convert it to a list of strings
+                                      print("data solo = " + snapshot.data.toString());
 
-                                      List cards = [card1];
-                                      return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
+                                      print("pleaseeeeeeee = " + snapshot.data[0]);
+                                      List types = snapshot.data.split(",");
+                                      print("1 after" + types.toString());
+                                      
+                                      for (int i = 0; i < types.length; i ++) {
+                                        if (types[i][0] == "[") {
+                                          print("yes");
+                                          types[i] = types[i].toString().substring(1);
+                                        } 
+
+                                        if (types[i][types[i].length-1] == "]") {
+                                          types[i] = types[i].toString().substring(0, types[i].length-1);
+                                        }
+                                      }
+
+
+                                      // If the item is in the selected closet, display
+                                      for (var i in types) {
+                                        print("current shirt new = " + shirts.toString());
+                                        print("current list = " + currentList.toString());
+                                        if (currentList.contains(i) | currentList.contains("null")) {
+                                          print("containes");
+                                          Column card1 = new Column(children: <Widget>[card(path1, types[0])] );
+
+                                          List cards = [card1];
+                                          return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
+                                        } 
+                                      } 
+
+
+
+                                      return Opacity(opacity: 0,);
+
+                                      
 
                                       //return Text(snapshot.data);
                                     } else {
@@ -524,15 +571,60 @@ return new Scaffold(
                                   future: getClothingName(path1, path2),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
-                                      print("data = " + snapshot.data.toString());
-                                      Column cardd = card(path1, snapshot.data[0]);
+                                      
+                                      print("data duo = " + snapshot.data.toString());
+                                      
+                                      print("pleaseeeeeeee = " + snapshot.data[0]);
+                                      List types = snapshot.data[0].split(",");
+                                      print("1 after" + types.toString());
+                                      
+                                      for (int i = 0; i < types.length; i ++) {
+                                        if (types[i][0] == "[") {
+                                          print("yes");
+                                          types[i] = types[i].toString().substring(1);
+                                        } 
+
+                                        if (types[i][types[i].length-1] == "]") {
+                                          types[i] = types[i].toString().substring(0, types[i].length-1);
+                                        }
+                                        
+                                      print("2 after = " + types.toString());
+                                      }
+                                      
+                                      //Do the logic for closet selection
+
+                                      
+                                      //End 
+
+                                      Column cardd = card(path1, types[0]);
                                       print("please do not be null");
                                       Column card1 = new Column(children: <Widget>[cardd]);
                                       
-                                      Column card2 = card(path2, snapshot.data[1]);
+
+                                      print("pleaseeeeeeee = " + snapshot.data[1]);
+                                      List types2 = snapshot.data[1].split(",");
+                                      print("1 after" + types2.toString());
+                                      
+                                      for (int i = 0; i < types2.length; i ++) {
+                                        if (types2[i][0] == "[") {
+                                          print("yes");
+                                          types2[i] = types2[i].toString().substring(1);
+                                        } 
+
+                                        if (types2[i][types2[i].length-1] == "]") {
+                                          types2[i] = types2[i].toString().substring(0, types2[i].length-1);
+                                        }
+
+                                      // Do logic for closet selection
+
+                                      // End
+                                        
+                                      print("2 after = " + types2.toString());
+
+                                      }
+                                      Column card2 = card(path2, types2[1]);
                                       cards.add(card1);
                                       cards.add(card2);
-                                      // here return a stack with the image of the bar under the container.  
                                       //Widget container = new Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
                                       return Container (child: Stack(children: <Widget>[getRow(cards)],), width: MediaQuery.of(context).size.width, );
                                       //return Text(snapshot.data);

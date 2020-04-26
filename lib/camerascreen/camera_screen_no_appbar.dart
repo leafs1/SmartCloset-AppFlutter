@@ -513,7 +513,8 @@ class _CameraScreenStateNoAppBar extends State {
       final double confidence = label.confidence;
 
       if (confidence > 0.8){
-        allTypes.add(text);
+        String textFinal = text;
+        allTypes.add(textFinal);
       }
     }
     info.add(allTypes);
