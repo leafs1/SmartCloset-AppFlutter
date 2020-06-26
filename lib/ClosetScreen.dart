@@ -48,14 +48,10 @@ class _ClosetState extends State {
     setState(() {
       file = io.Directory("$directory").listSync();  //use your folder name insted of resume.
     });
-
     print(file);
     File jsonn = File((await getApplicationDocumentsDirectory()).path + '/clothing_info.json');
     print("reading json");
     
-
-
-
     
     // Read from json
     String s = (await read(jsonn));
@@ -67,22 +63,17 @@ class _ClosetState extends State {
     List imageNames = new List();
     List clothingTypes = new List();
     List clothingColour = new List();
-
     // Parse json and add image info the their respected lists.
     for (final i in parsedJson["images"]){
       imageNames.add(i["name"]);  
       clothingTypes.add(i["type"]);
       clothingColour.add(i["colour"]);
     }
-
     print(imageNames);
     print(clothingTypes);
     print(clothingColour);
-
     
-
     
-
   }
   //Read from json
   Future<String> read(File json) async{
@@ -90,7 +81,6 @@ class _ClosetState extends State {
     //json.writeAsStringSync("{\"images\": [\"img1\":\"h\"]}");
     return (await json.readAsString());
   }
-
   */
 
   //Read from json
@@ -575,6 +565,7 @@ return new Scaffold(
                                       print("data duo = " + snapshot.data.toString());
                                       
                                       print("pleaseeeeeeee = " + snapshot.data[0]);
+                                      // types is all possible things that the AI thinks the image can be 
                                       List types = snapshot.data[0].split(",");
                                       print("1 after" + types.toString());
                                       
@@ -593,12 +584,27 @@ return new Scaffold(
                                       
                                       //Do the logic for closet selection
 
+                                      print("types 1 = " + types.toString());                        
+                                      for (var i in types) {
+                                        print("current shirt new = " + shirts.toString());
+                                        print("current list = " + currentList.toString());
+                                        if (currentList.contains(i) | currentList.contains("null")) {
+                                          print("containes");
+
+                                          Column cardd = card(path1, types[0]);
+                                          print("please do not be null");
+                                          Column card1 = new Column(children: <Widget>[cardd]);
+                                          cards.add(card1);
+                                          break;
+                                        } 
+                                      } 
                                       
+
                                       //End 
 
-                                      Column cardd = card(path1, types[0]);
-                                      print("please do not be null");
-                                      Column card1 = new Column(children: <Widget>[cardd]);
+                                      //Column cardd = card(path1, types[0]);
+                                      //print("please do not be null");
+                                      //Column card1 = new Column(children: <Widget>[cardd]);
                                       
 
                                       print("pleaseeeeeeee = " + snapshot.data[1]);
@@ -617,14 +623,28 @@ return new Scaffold(
 
                                       // Do logic for closet selection
 
+                                      print("types 2 = " + types2.toString());                        
+                                      for (var i in types2) {
+                                        print("current shirt new = " + shirts.toString());
+                                        print("current list = " + currentList.toString());
+                                        if (currentList.contains(i) | currentList.contains("null")) {
+                                          print("containes");
+
+                                          Column card2 = card(path2, types2[1]);
+                                          cards.add(card2);
+                                          break;
+                                        } 
+                                      } 
+
+
                                       // End
                                         
                                       print("2 after = " + types2.toString());
 
                                       }
-                                      Column card2 = card(path2, types2[1]);
-                                      cards.add(card1);
-                                      cards.add(card2);
+                                      //Column card2 = card(path2, types2[1]);
+                                      //cards.add(card1);
+                                      //cards.add(card2);
                                       //Widget container = new Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
                                       return Container (child: Stack(children: <Widget>[getRow(cards)],), width: MediaQuery.of(context).size.width, );
                                       //return Text(snapshot.data);
@@ -660,4 +680,3 @@ return new Scaffold(
 
 
 }
-
