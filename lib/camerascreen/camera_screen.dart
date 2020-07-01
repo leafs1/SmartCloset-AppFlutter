@@ -520,7 +520,7 @@ class _CameraScreenState extends State {
       final String text = label.text;
       final double confidence = label.confidence;
 
-      if (confidence > 0.8){
+      if (confidence > 0.7){
         String textFinal = text;
         allTypes.add(textFinal);
       }

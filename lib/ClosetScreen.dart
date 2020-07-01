@@ -25,9 +25,11 @@ class _ClosetState extends State {
   List file = new List();
 
   List currentList = ["null"];
-  //List shirts = ["Shirt", "shirt", "t-shirt", "top"];
-  List shirts = ["Property", "kitchen", "Kitchen", "Room"];
-  List pants = ["idk"];
+  //List shirts = ["Property", "kitchen", "Kitchen", "Room"];
+  List shirts = ["T-shirt", "Shirt", "shirt", "t-shirt", "Active shirt", "Long-sleeved t-shirt"];
+  List sweaters = ["Jersey", "Sweater", "Hoodie", "Sweatshirt"];
+  List pants = ["Trousers", "Jeans", "Cargo pants", "Active pants", "Khaki pants", "Suit trousers"];
+  List shorts = ["Shorts", "jean short", "Active shorts", "board short", "Trunks", "Bermuda shorts"];
   List globalCards = [];
   
   void initState() {
@@ -441,7 +443,7 @@ return new Scaffold(
                     Icon(Icons.settings),
                     SizedBox(width: 10),
                     Text(
-                      "Pants", 
+                      "Sweaters", 
                     ),
                   ],
                 ),
@@ -454,7 +456,20 @@ return new Scaffold(
                     Icon(Icons.settings),
                     SizedBox(width: 10),
                     Text(
-                      "Other", 
+                      "Pants", 
+                    ),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: "5",
+                child: Row(
+                  //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Icon(Icons.settings),
+                    SizedBox(width: 10),
+                    Text(
+                      "Shorts", 
                     ),
                   ],
                 ),
@@ -467,7 +482,11 @@ return new Scaffold(
                 } else if (value == "2") {
                   currentList = shirts;
                 } else if (value == "3") {
+                  currentList = sweaters;
+                } else if (value == "4") {
                   currentList = pants;
+                } else if (value == "5") {
+                  currentList = shorts;
                 }
                 _value = value;
                 build(context);
@@ -538,6 +557,7 @@ return new Scaffold(
                                       for (var i in types) {
                                         print("current shirt new = " + shirts.toString());
                                         print("current list = " + currentList.toString());
+                                        
                                         if (currentList.contains(i) | currentList.contains("null")) {
                                           print("containes");
                                           Column card1 = new Column(children: <Widget>[card(path1, types[0])] );
