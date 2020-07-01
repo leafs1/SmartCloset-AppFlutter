@@ -4,10 +4,12 @@ import 'dart:io';
 import 'dart:core';
 
 import 'dart:convert';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:smart_closet_flutter/DrawerScreen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:image/image.dart' as img;
+import 'package:smart_closet_flutter/test.dart';
 
 class Closet extends StatefulWidget {
   @override
@@ -24,7 +26,7 @@ class _ClosetState extends State {
 
   List currentList = ["null"];
   //List shirts = ["Shirt", "shirt", "t-shirt", "top"];
-  List shirts = ["Property", "kitchen", "Kitchen"];
+  List shirts = ["Property", "kitchen", "Kitchen", "Room"];
   List pants = ["idk"];
   List globalCards = [];
   
@@ -545,7 +547,17 @@ return new Scaffold(
                                           break;
                                         } 
                                       } 
-
+                                      if (globalCards.length == 0) {
+                                        return Container(
+                                                height: (MediaQuery.of(context).size.height),
+                                                width: (MediaQuery.of(context).size.width),
+                                                child: Align(
+                                                        alignment: Alignment.center, // Align however you like (i.e .centerRight, centerLeft)
+                                                        child: Text("There are no clothes in this closet!", style: TextStyle(fontSize:20, fontFamily: "OpenSans")),
+                                                      ),
+                                                );
+                                      }
+                                      
                                       print("cards length 1 = " + globalCards.length.toString());
                                       if (globalCards.length == 2) {
                                         List currentCards = [globalCards[0], globalCards[1]];
@@ -557,7 +569,11 @@ return new Scaffold(
                                         globalCards.removeAt(0);
                                         return Container(child: getRow(currentCards), width: MediaQuery.of(context).size.width);
                                       } else if (globalCards.length == 0 ) {
-                                        return Text("please2");
+                                        return Text("");
+
+    
+      
+   
                                       }
 
 
@@ -698,9 +714,9 @@ return new Scaffold(
                                         return Container(child: getRow(currentCards), width: MediaQuery.of(context).size.width);
                                       } else if (globalCards.length == 0 ) {
                                         print("len = none");
-                                        return Text("please2");
+                                        return Text("");
                                       } else {
-                                        return Text("nothin");
+                                        return Text("");
                                       }
                                       //return Text(snapshot.data);
                                     } else {
