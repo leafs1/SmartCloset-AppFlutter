@@ -26,12 +26,12 @@ class _ClosetState extends State {
   //List shirts = ["Shirt", "shirt", "t-shirt", "top"];
   List shirts = ["Property", "kitchen", "Kitchen"];
   List pants = ["idk"];
+  List globalCards = [];
   
   void initState() {
         // TODO: implement initState
         super.initState();
         //_secondListOfFiles();
-
         _listofFiles();
       }
 
@@ -488,6 +488,7 @@ return new Scaffold(
                     child: ListView.separated(
                       
                       itemBuilder: (BuildContext context, int index) {
+                        print("cards length out + " + globalCards.length.toString());
                           //print("length = " + file.length.toString());
                           //print(file.toString());
 
@@ -497,6 +498,9 @@ return new Scaffold(
                           int usedIndex = index * 2;
 
                           //print("index = " + usedIndex.toString());
+
+                          print("top of it = " + file.length.toString());
+                          print("used index = " + usedIndex.toString());
 
                           if (file.length % 2 == 1 && usedIndex == file.length-1) {
                             String path1 = getPath(usedIndex);
@@ -536,14 +540,29 @@ return new Scaffold(
                                           print("containes");
                                           Column card1 = new Column(children: <Widget>[card(path1, types[0])] );
 
-                                          List cards = [card1];
-                                          return Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
+                                          //List cards = [card1];
+                                          globalCards.add(card1);
+                                          break;
                                         } 
                                       } 
 
+                                      print("cards length 1 = " + globalCards.length.toString());
+                                      if (globalCards.length == 2) {
+                                        List currentCards = [globalCards[0], globalCards[1]];
+                                        globalCards.removeAt(1);
+                                        globalCards.removeAt(0);
+                                        return Container (child: Stack(children: <Widget>[getRow(currentCards)],), width: MediaQuery.of(context).size.width, );
+                                      } else if (globalCards.length == 1) {
+                                        List currentCards = [globalCards[0]];
+                                        globalCards.removeAt(0);
+                                        return Container(child: getRow(currentCards), width: MediaQuery.of(context).size.width);
+                                      } else if (globalCards.length == 0 ) {
+                                        return Text("please2");
+                                      }
 
 
-                                      return Opacity(opacity: 0,);
+
+                                      //return Opacity(opacity: 0,);
 
                                       
 
@@ -556,22 +575,22 @@ return new Scaffold(
                           } else {
                             String path1 = getPath(usedIndex);
                             String path2 = getPath(usedIndex+1);
-                            List cards = new List();
+                            //List cards = new List();
                             return FutureBuilder(
                                   future: getClothingName(path1, path2),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     if (snapshot.hasData) {
                                       
-                                      print("data duo = " + snapshot.data.toString());
+                                    print("data duo = " + snapshot.data.toString());
                                       
-                                      print("pleaseeeeeeee = " + snapshot.data[0]);
+                                    //  print("pleaseeeeeeee = " + snapshot.data[0]);
                                       // types is all possible things that the AI thinks the image can be 
                                       List types = snapshot.data[0].split(",");
-                                      print("1 after" + types.toString());
+                                     // print("1 after" + types.toString());
                                       
                                       for (int i = 0; i < types.length; i ++) {
                                         if (types[i][0] == "[") {
-                                          print("yes");
+                                       //   print("yes");
                                           types[i] = types[i].toString().substring(1);
                                         } 
 
@@ -579,7 +598,7 @@ return new Scaffold(
                                           types[i] = types[i].toString().substring(0, types[i].length-1);
                                         }
                                         
-                                      print("2 after = " + types.toString());
+                                     // print("2 after = " + types.toString());
                                       }
                                       
                                       //Do the logic for closet selection
@@ -594,7 +613,9 @@ return new Scaffold(
                                           Column cardd = card(path1, types[0]);
                                           print("please do not be null");
                                           Column card1 = new Column(children: <Widget>[cardd]);
-                                          cards.add(card1);
+                                          print("cards length before = " + globalCards.length.toString());
+                                          globalCards.add(card1);
+                                          print("cards length after = " + globalCards.length.toString());
                                           break;
                                         } 
                                       } 
@@ -607,46 +628,80 @@ return new Scaffold(
                                       //Column card1 = new Column(children: <Widget>[cardd]);
                                       
 
-                                      print("pleaseeeeeeee = " + snapshot.data[1]);
+                                      //print("pleaseeeeeeee = " + snapshot.data[1]);
                                       List types2 = snapshot.data[1].split(",");
-                                      print("1 after" + types2.toString());
+                                      //print("1 after" + types2.toString());
                                       
                                       for (int i = 0; i < types2.length; i ++) {
                                         if (types2[i][0] == "[") {
-                                          print("yes");
+                                          //print("yes");
                                           types2[i] = types2[i].toString().substring(1);
                                         } 
 
                                         if (types2[i][types2[i].length-1] == "]") {
                                           types2[i] = types2[i].toString().substring(0, types2[i].length-1);
                                         }
+                                      }
 
                                       // Do logic for closet selection
 
-                                      print("types 2 = " + types2.toString());                        
+                                     // print("types 2 = " + types2.toString());                        
                                       for (var i in types2) {
-                                        print("current shirt new = " + shirts.toString());
-                                        print("current list = " + currentList.toString());
+                                       // print("current shirt new = " + shirts.toString());
+                                       // print("current list = " + currentList.toString());
                                         if (currentList.contains(i) | currentList.contains("null")) {
                                           print("containes");
 
                                           Column card2 = card(path2, types2[1]);
-                                          cards.add(card2);
+                                          print("cards length before second = " + globalCards.length.toString());
+                                          globalCards.add(card2);
+                                          print("cards length after second = " + globalCards.length.toString());
                                           break;
                                         } 
                                       } 
-
+                                      print("after for");
 
                                       // End
                                         
-                                      print("2 after = " + types2.toString());
+                                     // print("2 after = " + types2.toString());
 
-                                      }
+                                      
                                       //Column card2 = card(path2, types2[1]);
                                       //cards.add(card1);
                                       //cards.add(card2);
                                       //Widget container = new Container(child: getRow(cards), width: MediaQuery.of(context).size.width);
-                                      return Container (child: Stack(children: <Widget>[getRow(cards)],), width: MediaQuery.of(context).size.width, );
+                                      print("cards length 2 = " + globalCards.length.toString());
+                                      print(globalCards);
+                                      print("used index = " + usedIndex.toString());
+                                      print("length = " + file.length.toString());
+                                      if (globalCards.length == 2) {
+                                        print("len = 2");
+                                        //crashed here
+                                        print("global cards = " + globalCards.toString());
+                                        List currentCards = [globalCards[0], globalCards[1]];
+                                        globalCards.removeAt(1);
+                                        globalCards.removeAt(0);
+                                        print("Final global cards = " + globalCards.toString());
+                                        print("current cards = " + currentCards.toString());
+                                        print("right before");
+                                        return Container (child: Stack(children: <Widget>[getRow(currentCards)],), width: MediaQuery.of(context).size.width, );
+                                      } else if (globalCards.length == 3) {
+                                        print("len = 3");
+                                        List currentCards = [globalCards[0], globalCards[1]];
+                                        globalCards.removeAt(1);
+                                        globalCards.removeAt(0);
+                                        return Container (child: Stack(children: <Widget>[getRow(currentCards)],), width: MediaQuery.of(context).size.width, );
+                                      } else if (globalCards.length == 1 && usedIndex == file.length-2) {
+                                        print("len = 1");
+                                        List currentCards = [globalCards[0]];
+                                        globalCards.removeAt(0);
+                                        return Container(child: getRow(currentCards), width: MediaQuery.of(context).size.width);
+                                      } else if (globalCards.length == 0 ) {
+                                        print("len = none");
+                                        return Text("please2");
+                                      } else {
+                                        return Text("nothin");
+                                      }
                                       //return Text(snapshot.data);
                                     } else {
                                       return CircularProgressIndicator();
